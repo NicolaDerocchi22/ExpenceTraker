@@ -52,8 +52,8 @@ app.get("/", async(req, res) => {
     var tHype = 0
     var tPaypal = 0
 
-    entrate = await Entrata.find({})
-    spese = await Spesa.find({})
+    entrate = await (await Entrata.find({})).filter(e => e.data.getMonth() === new Date().getMonth())
+    spese = await Spesa.find({}).filter(s => s.data.getMonth() === new Date().getMonth())
 
     spese.forEach(s => {
         tSpese += s.importo
