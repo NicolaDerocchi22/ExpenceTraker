@@ -67,13 +67,8 @@ var options = {
 };
 
 function createLineChart(options) {
-    getData()
     var chart = new ApexCharts(document.querySelector("#lineChart"), options);
     chart.render();
-}
-
-window.onload = () => {
-    createLineChart(options)
 }
 
 function getData() {
@@ -93,4 +88,8 @@ function getData() {
         }
     });
 
+}
+
+window.onload = () => {
+    createLineChart(options)
 }

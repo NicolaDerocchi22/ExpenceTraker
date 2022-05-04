@@ -132,7 +132,7 @@ app.get("/getSpeseForChart", (req, res) => {
 })
 
 app.get("/getEntrateForChart", (req, res) => {
-    console.log("get spese");
+    console.log("get entrate");
 })
 
 //LISTEN ------------------------------------
