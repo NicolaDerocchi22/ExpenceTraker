@@ -16,3 +16,11 @@ hr {
 i {
     size: 2rem;
 }
+
+.chartDiv {
+    margin: 3rem;
+}
+
+body {
+    margin: 1rem 3rem;
+}

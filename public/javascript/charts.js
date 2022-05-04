@@ -66,5 +66,11 @@ var options = {
     }
 };
 
-var chart = new ApexCharts(document.querySelector("#chart"), options);
-chart.render();
+function createLineChart(options) {
+    var chart = new ApexCharts(document.querySelector("#lineChart"), options);
+    chart.render();
+}
+
+window.onload = () => {
+    createLineChart(options)
+}
