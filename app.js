@@ -52,6 +52,10 @@ app.get("/", async(req, res) => {
     var tEntrate = 0
     var tHype = 0
     var tPaypal = 0
+    var dateFrom = new Date()
+    var dateEnd = new Date()
+    dateEnd.setMonth(dateFrom.getMonth + 1)
+    console.log(dateFrom);
 
     entrate = await Entrata.find({})
     spese = await Spesa.find({})
@@ -135,8 +139,11 @@ app.get("/getEntrateForChart", (req, res) => {
     console.log("get entrate");
 })
 
-app.get("/spese", (req, res) => {
-    res.render("spese")
+app.get("/spese", async(req, res) => {
+
+    var spese = await Spesa.find({})
+
+    res.render("spese", { spese: spese })
 })
 
 app.get("/entrate", (req, res) => {
