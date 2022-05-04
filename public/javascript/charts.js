@@ -67,10 +67,30 @@ var options = {
 };
 
 function createLineChart(options) {
+    getData()
     var chart = new ApexCharts(document.querySelector("#lineChart"), options);
     chart.render();
 }
 
 window.onload = () => {
     createLineChart(options)
+}
+
+function getData() {
+    var spese = $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/getSpeseForChart',
+        success: function(data) {
+            return data;
+        }
+    });
+
+    var entrate = $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/getEntrateForChart',
+        success: function(data) {
+            return data;
+        }
+    });
+
 }
