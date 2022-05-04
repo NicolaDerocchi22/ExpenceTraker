@@ -135,6 +135,18 @@ app.get("/getEntrateForChart", (req, res) => {
     console.log("get entrate");
 })
 
+app.get("/spese", (req, res) => {
+    res.render("spese")
+})
+
+app.get("/entrate", (req, res) => {
+    res.render("entrate")
+})
+
+app.get("/conti", (req, res) => {
+    res.render("conti")
+})
+
 //LISTEN ------------------------------------
 
 app.listen(3000, () => {
