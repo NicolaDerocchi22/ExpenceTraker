@@ -117,24 +117,30 @@ function createLineChart(options) {
 }
 
 function getData() {
-    var spese = $.ajax({
-        type: 'GET',
-        url: 'http://localhost:3000/getSpeseForChart',
-        success: function(data) {
-            return data;
-        }
-    });
 
-    var entrate = $.ajax({
-        type: 'GET',
-        url: 'http://localhost:3000/getEntrateForChart',
-        success: function(data) {
-            return data;
-        }
-    });
+    fetchData()
+        .then(res => {
+            if (res === null) {
+                console.log("Bad");
+            } else {
+                console.log(res[0]);
+            }
+        })
+}
 
+function fetchData() {
+    return fetch('/getSpeseForChart', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            dataType: 'json'
+        })
+        .then(response => response.json())
 }
 
 window.onload = () => {
     createLineChart(options)
+    getData()
 }
