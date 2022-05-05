@@ -70,7 +70,7 @@ var optionsPie = {
     series: [44, 55, 13, 43, 22],
     chart: {
         width: 380,
-        type: 'pie',
+        type: 'donut',
     },
     labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
     responsive: [{
