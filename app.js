@@ -52,19 +52,23 @@ app.get("/", async(req, res) => {
     var tEntrate = 0
     var tHype = 0
     var tPaypal = 0
-    var dateFrom = new Date()
-    var dateEnd = new Date()
-    dateEnd.setMonth(dateFrom.getMonth + 1)
-    console.log(dateFrom);
+
+
 
     entrate = await Entrata.find({})
     spese = await Spesa.find({})
 
-    spese.forEach(s => {
+    speseFiltered = spese.sort((a, b) => { return b.data - a.data })
+    entrateFiltered = entrate.sort((a, b) => { return b.data - a.data })
+
+    speseFiltered = speseFiltered.slice(0, 10)
+    entrateFiltered = entrateFiltered.slice(0, 10)
+
+    speseFiltered.forEach(s => {
         tSpese += s.importo
     });
 
-    entrate.forEach(e => {
+    entrateFiltered.forEach(e => {
         tEntrate += e.importo
     });
 
@@ -84,7 +88,7 @@ app.get("/", async(req, res) => {
         }
     });
 
-    res.render("Home", { listaSpese: spese, listaEntrate: entrate, totEntrate: tEntrate, totSpese: tSpese, totHype: Number(tHype), totPayPal: Number(tPaypal) })
+    res.render("Home", { listaSpese: speseFiltered, listaEntrate: entrateFiltered, totEntrate: tEntrate, totSpese: tSpese, totHype: Number(tHype), totPayPal: Number(tPaypal) })
 })
 
 //POST ------------------------------------
@@ -142,8 +146,71 @@ app.get("/getEntrateForChart", (req, res) => {
 app.get("/spese", async(req, res) => {
 
     var spese = await Spesa.find({})
+    spese = spese.sort((a, b) => { return b.data - a.data })
 
-    res.render("spese", { spese: spese })
+    var result = {
+        bar: 0,
+        payPal: 0,
+        benzina: 0,
+        spesa: 0,
+        shopping: 0,
+        ristorante: 0,
+        regali: 0,
+        casa: 0,
+        prelievi: 0,
+        telefono: 0,
+        palestra: 0,
+        altro: 0
+    }
+
+    spese.forEach(s => {
+        switch (s.categoria) {
+            case "Spesa":
+                result.spesa = result.spesa + s.importo
+                break;
+            case "Shopping":
+                result.shopping = result.shopping + s.importo
+                break;
+            case "Ristorante":
+                result.ristorante = result.ristorante + s.importo
+                break;
+            case "Bar":
+                result.bar = result.bar + s.importo
+                break;
+            case "PayPal":
+                result.payPal = result.payPal + s.importo
+                break;
+            case "Benzina":
+                result.benzina = result.benzina + s.importo
+                break;
+            case "Regali":
+                result.regali = result.regali + s.importo
+                break;
+            case "Spesa":
+                result.spesa = result.spesa + s.importo
+                break;
+            case "Casa":
+                result.casa = result.casa + s.importo
+                break;
+            case "Palestra":
+                result.palestra = result.palestra + s.importo
+                break;
+            case "Prelievi":
+                result.prelievi = result.prelievi + s.importo
+                break;
+            case "Telefono":
+                result.telefono = result.telefono + s.importo
+                break;
+            case "Altro":
+                result.altro = result.altro + s.importo
+                break;
+
+            default:
+                break;
+        }
+    });
+
+    res.render("spese", { spese: spese, tBar: result.bar, tPayPal: result.payPal, tBenzina: result.benzina, tSpesa: result.spesa, tShopping: result.shopping, tRistorante: result.ristorante, tRegali: result.regali, tCasa: result.casa, tPrelievi: result.prelievi, tTelefono: result.telefono, tPalestra: result.palestra, tAltro: result.altro })
 })
 
 app.get("/entrate", (req, res) => {

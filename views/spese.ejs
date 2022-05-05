@@ -1,10 +1,62 @@
 <%- include("header") -%>
-    <h1>Spese</h1>
+    <h1 class="text-center">Spese</h1>
     <hr>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <h3>Filtri</h3>
+                <h3 class="text-center">Filtri</h3>
+            </div>
+        </div>
+        <hr>
+        <div class="card">
+            <div class="card-header text-center">
+                Da ##/#### A ##/####
+            </div>
+            <div class="row spese-margin">
+                <div class="col-sm-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Bar: -->
+                            <%= tBar %>
+                        </li>
+                        <li class="list-group-item">PayPal: -->
+                            <%= tPayPal %>
+                        </li>
+                        <li class="list-group-item">Benzina: -->
+                            <%= tBenzina %>
+                        </li>
+                        <li class="list-group-item">Spesa: -->
+                            <%= tSpesa %>
+                        </li>
+                        <li class="list-group-item">Shopping: -->
+                            <%= tShopping %>
+                        </li>
+                        <li class="list-group-item">Ristorante: -->
+                            <%= tRistorante %>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Regali: -->
+                            <%= tRegali %>
+                        </li>
+                        <li class="list-group-item">Casa: -->
+                            <%= tCasa %>
+                        </li>
+                        <li class="list-group-item">Prelievi: -->
+                            <%= tPrelievi %>
+                        </li>
+                        <li class="list-group-item">Telefono: -->
+                            <%= tTelefono %>
+                        </li>
+                        <li class="list-group-item">Palestra: -->
+                            <%= tPalestra %>
+                        </li>
+                        <li class="list-group-item">Altro: -->
+                            <%= tAltro %>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <hr>
