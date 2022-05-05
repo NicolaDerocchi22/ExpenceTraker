@@ -66,9 +66,35 @@ var options = {
     }
 };
 
+var optionsPie = {
+    series: [44, 55, 13, 43, 22],
+    chart: {
+        width: 380,
+        type: 'pie',
+    },
+    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+    responsive: [{
+        breakpoint: 480,
+        options: {
+            chart: {
+                width: 200
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }]
+};
+
 function createLineChart(options) {
     var chart = new ApexCharts(document.querySelector("#lineChart"), options);
     chart.render();
+
+    var chartCat = new ApexCharts(document.querySelector("#categoryChart"), optionsPie);
+    chartCat.render();
+
+    var chartBal = new ApexCharts(document.querySelector("#balanceChart"), optionsPie);
+    chartBal.render();
 }
 
 function getData() {
