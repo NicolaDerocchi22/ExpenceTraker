@@ -91,7 +91,7 @@ app.get("/", async(req, res) => {
     res.render("Home", { listaSpese: speseFiltered, listaEntrate: entrateFiltered, totEntrate: tEntrate, totSpese: tSpese, totHype: Number(tHype), totPayPal: Number(tPaypal) })
 })
 
-//POST ------------------------------------
+//POST PAGINE PRINCIPALI E ADD ------------------------------------
 
 app.post("/addEntrata", (req, res) => {
 
@@ -226,10 +226,30 @@ app.get("/conti", (req, res) => {
     res.render("conti")
 })
 
-//GET DATI GRAFICI ------------------------------------
+//DATI GRAFICI ------------------------------------
 
-app.post("/getSpeseForChart", (req, res) => {
-    var x = [1, 2, 3]
+app.post("/getSpeseForBalanceChart", (req, res) => {
+    var x = [100, 200]
+    return res.send(x)
+})
+
+app.post("/getSpeseForLineChart", (req, res) => {
+    var x = {
+        data: [12, 32, 64, 88, 5, 34, 43, 100, 57, 12, 32, 64, 88, 0, 45, 54, 12, 32, 64, 88, 34, 45, 45, 12, 32, 64, 88, 23, 32, 43],
+        categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
+    }
+    return res.send(x)
+})
+
+app.post("/getDataCategoriesS", (req, res) => {
+    var x = [44, 55, 13, 43, 22, 43, 54, 76, 32, 45, 21, 86, 98]
+
+    return res.send(x)
+})
+
+app.post("/getDataCategoriesE", (req, res) => {
+    var x = [1000, 145, 10]
+
     return res.send(x)
 })
 

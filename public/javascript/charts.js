@@ -1,135 +1,214 @@
-var options = {
-    series: [{
-        name: 'Spese',
-        data: [12, 32, 64, 88, 5, 34, 43, 100, 57, 12, 32, 64, 88, 0, 45, 54, 12, 32, 64, 88, 34, 45, 45, 12, 32, 64, 88, 23, 32, 43]
-    }],
-    chart: {
-        type: 'bar',
-        height: 350
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false,
-            columnWidth: '30%',
-            endingShape: 'rounded'
-        },
-    },
-    dataLabels: {
-        enabled: false
-    },
-    stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-    },
-    xaxis: {
-        categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
-    },
-    yaxis: {
-        title: {
-            text: '€'
-        }
-    },
-    fill: {
-        opacity: 1
-    },
-    tooltip: {
-        y: {
-            formatter: function(val) {
-                return "€ " + val
-            }
-        }
-    }
-};
-
-var optionsPieBalance = {
-    series: [976, 1209],
-    chart: {
-        width: 380,
-        type: 'donut',
-    },
-    labels: ['Speso', 'Bilancio'],
-    responsive: [{
-        breakpoint: 480,
-        options: {
-            chart: {
-                width: 200
-            },
-            legend: {
-                position: 'center'
-            }
-        }
-    }]
-};
-
-var optionsPieCategoryS = {
-    series: [44, 55, 13, 43, 22, 43, 54, 76, 32, 45, 21, 86, 98],
-    chart: {
-        width: 380,
-        type: 'donut',
-    },
-    labels: ['Spesa', 'Shopping', 'Ristorante', 'Bar', 'PayPal', 'Benzina', 'Regali', 'Spesa', 'Casa', 'Palestra', 'Prelievi', 'Telefono', 'Altro'],
-    responsive: [{
-        breakpoint: 480,
-        options: {
-            chart: {
-                width: 200
-            },
-            legend: {
-                position: 'center'
-            }
-        }
-    }]
-};
-
-var optionsPieCategoryE = {
-    series: [1000, 145, 10],
-    chart: {
-        width: 380,
-        type: 'donut',
-    },
-    labels: ['Stipendio', 'PayPal', 'Altro'],
-    responsive: [{
-        breakpoint: 480,
-        options: {
-            chart: {
-                width: 200
-            },
-            legend: {
-                position: 'center'
-            }
-        }
-    }]
-};
-
 function createLineChart(options) {
-    var chart = new ApexCharts(document.querySelector("#lineChart"), options);
-    chart.render();
-
-    var chartCatS = new ApexCharts(document.querySelector("#categoryChartS"), optionsPieCategoryS);
-    chartCatS.render();
-
     var chartCatE = new ApexCharts(document.querySelector("#categoryChartE"), optionsPieCategoryE);
     chartCatE.render();
-
-    var chartBal = new ApexCharts(document.querySelector("#balanceChart"), optionsPieBalance);
-    chartBal.render();
 }
 
-function getData() {
+function loadCharts() {
+    loadLineChart()
+    loadChartBalance()
+    loadChartCategoriesS()
+    loadChartCategoriesE()
+}
 
-    fetchData()
+function loadChartBalance() {
+
+    var optionsPieBalance = {
+        series: [],
+        chart: {
+            width: 380,
+            type: 'donut',
+        },
+        labels: ['Speso', 'Bilancio'],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'center'
+                }
+            }
+        }]
+    };
+
+    fetchDataChartBalance()
         .then(res => {
             if (res === null) {
                 console.log("Bad");
             } else {
-                console.log(res[0]);
+                optionsPieBalance.series = res
+                var chart = new ApexCharts(document.querySelector("#balanceChart"), optionsPieBalance);
+                chart.render();
             }
         })
 }
 
-function fetchData() {
-    return fetch('/getSpeseForChart', {
+function loadLineChart() {
+
+    var optionsLineChart = {
+        series: [{
+            name: 'Spese',
+            data: []
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '30%',
+                endingShape: 'rounded'
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: [],
+        },
+        yaxis: {
+            title: {
+                text: '€'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function(val) {
+                    return "€ " + val
+                }
+            }
+        }
+    };
+
+    fetchDataLineChart()
+        .then(res => {
+            if (res === null) {
+                console.log("Bad");
+            } else {
+                optionsLineChart.series[0].data = res.data
+                optionsLineChart.xaxis.categories = res.categories
+                var chart = new ApexCharts(document.querySelector("#lineChart"), optionsLineChart);
+                chart.render();
+            }
+        })
+}
+
+function loadChartCategoriesS() {
+
+    var optionsPieCategoryS = {
+        series: [],
+        chart: {
+            width: 380,
+            type: 'donut',
+        },
+        labels: ['Spesa', 'Shopping', 'Ristorante', 'Bar', 'PayPal', 'Benzina', 'Regali', 'Spesa', 'Casa', 'Palestra', 'Prelievi', 'Telefono', 'Altro'],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'center'
+                }
+            }
+        }]
+    };
+
+    fetchDataCategoriesChartS()
+        .then(res => {
+            if (res === null) {
+                console.log("Bad");
+            } else {
+                optionsPieCategoryS.series = res
+                var chart = new ApexCharts(document.querySelector("#categoryChartS"), optionsPieCategoryS);
+                chart.render();
+            }
+        })
+}
+
+function loadChartCategoriesE() {
+
+    var optionsPieCategoryE = {
+        series: [],
+        chart: {
+            width: 380,
+            type: 'donut',
+        },
+        labels: ['Stipendio', 'PayPal', 'Altro'],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'center'
+                }
+            }
+        }]
+    };
+
+    fetchDataCategoriesChartE()
+        .then(res => {
+            if (res === null) {
+                console.log("Bad");
+            } else {
+                optionsPieCategoryE.series = res
+                var chart = new ApexCharts(document.querySelector("#categoryChartE"), optionsPieCategoryE);
+                chart.render();
+            }
+        })
+}
+
+function fetchDataChartBalance() {
+    return fetch('/getSpeseForBalanceChart', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            dataType: 'json'
+        })
+        .then(response => response.json())
+}
+
+function fetchDataLineChart() {
+    return fetch('/getSpeseForLineChart', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            dataType: 'json'
+        })
+        .then(response => response.json())
+}
+
+function fetchDataCategoriesChartS() {
+    return fetch('/getDataCategoriesS', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            dataType: 'json'
+        })
+        .then(response => response.json())
+}
+
+function fetchDataCategoriesChartE() {
+    return fetch('/getDataCategoriesE', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json; charset=utf-8',
@@ -141,6 +220,6 @@ function fetchData() {
 }
 
 window.onload = () => {
-    createLineChart(options)
-    getData()
+    //createLineChart(options)
+    loadCharts()
 }
