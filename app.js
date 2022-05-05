@@ -233,11 +233,21 @@ app.post("/getSpeseForBalanceChart", (req, res) => {
     return res.send(x)
 })
 
-app.post("/getSpeseForLineChart", (req, res) => {
+app.post("/getSpeseForLineChart", async(req, res) => {
+    var today = new Date()
+    var daysInMonth = getDayInMonth(today.getMonth() + 1, today.getFullYear())
     var x = {
-        data: [12, 32, 64, 88, 5, 34, 43, 100, 57, 12, 32, 64, 88, 0, 45, 54, 12, 32, 64, 88, 34, 45, 45, 12, 32, 64, 88, 23, 32, 43],
-        categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
+        data: [],
+        categories: []
     }
+
+    var spese = await Spesa.find({})
+
+    for (let i = 1; i <= daysInMonth; i++) {
+        x.categories.push(String(i))
+        x.data.push(37)
+    }
+
     return res.send(x)
 })
 
@@ -252,6 +262,12 @@ app.post("/getDataCategoriesE", (req, res) => {
 
     return res.send(x)
 })
+
+// FUNZIONI VAIRE ------------------------------------
+
+function getDayInMonth(m, a) {
+    return new Date(a, m, 0).getDate();
+}
 
 //LISTEN ------------------------------------
 
