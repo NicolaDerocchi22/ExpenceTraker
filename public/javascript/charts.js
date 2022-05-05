@@ -1,78 +1,57 @@
 var options = {
     series: [{
-            name: "High - 2013",
-            data: [28, 29, 33, 36, 32, 32, 33]
-        },
-        {
-            name: "Low - 2013",
-            data: [12, 11, 14, 18, 17, 13, 13]
-        }
-    ],
+        name: 'Spese',
+        data: [700, 850, 898, 789, 678, 986, 987, 678, 896, 677, 896, 757]
+    }, {
+        name: 'Entrate',
+        data: [1324, 1375, 1376, 1398, 1344, 1573, 1324, 1389, 1456, 1534, 1353, 1560]
+    }],
     chart: {
-        height: 350,
-        type: 'line',
-        dropShadow: {
-            enabled: true,
-            color: '#000',
-            top: 18,
-            left: 7,
-            blur: 10,
-            opacity: 0.2
-        },
-        toolbar: {
-            show: false
-        }
+        type: 'bar',
+        height: 350
     },
-    colors: ['#77B6EA', '#545454'],
+    plotOptions: {
+        bar: {
+            horizontal: false,
+            columnWidth: '30%',
+            endingShape: 'rounded'
+        },
+    },
     dataLabels: {
-        enabled: true,
+        enabled: false
     },
     stroke: {
-        curve: 'smooth'
-    },
-    title: {
-        text: 'Average High & Low Temperature',
-        align: 'left'
-    },
-    grid: {
-        borderColor: '#e7e7e7',
-        row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-        },
-    },
-    markers: {
-        size: 1
+        show: true,
+        width: 2,
+        colors: ['transparent']
     },
     xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        title: {
-            text: 'Month'
-        }
+        categories: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'],
     },
     yaxis: {
         title: {
-            text: 'Temperature'
-        },
-        min: 5,
-        max: 40
+            text: '€'
+        }
     },
-    legend: {
-        position: 'top',
-        horizontalAlign: 'right',
-        floating: true,
-        offsetY: -25,
-        offsetX: -5
+    fill: {
+        opacity: 1
+    },
+    tooltip: {
+        y: {
+            formatter: function(val) {
+                return "€ " + val
+            }
+        }
     }
 };
 
-var optionsPie = {
-    series: [44, 55, 13, 43, 22],
+var optionsPieBalance = {
+    series: [976, 1209],
     chart: {
         width: 380,
         type: 'donut',
     },
-    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+    labels: ['Speso', 'Bilancio'],
     responsive: [{
         breakpoint: 480,
         options: {
@@ -80,7 +59,47 @@ var optionsPie = {
                 width: 200
             },
             legend: {
-                position: 'bottom'
+                position: 'center'
+            }
+        }
+    }]
+};
+
+var optionsPieCategoryS = {
+    series: [44, 55, 13, 43, 22, 43, 54, 76, 32, 45, 21, 86, 98],
+    chart: {
+        width: 380,
+        type: 'donut',
+    },
+    labels: ['Spesa', 'Shopping', 'Ristorante', 'Bar', 'PayPal', 'Benzina', 'Regali', 'Spesa', 'Casa', 'Palestra', 'Prelievi', 'Telefono', 'Altro'],
+    responsive: [{
+        breakpoint: 480,
+        options: {
+            chart: {
+                width: 200
+            },
+            legend: {
+                position: 'center'
+            }
+        }
+    }]
+};
+
+var optionsPieCategoryE = {
+    series: [1000, 145, 10],
+    chart: {
+        width: 380,
+        type: 'donut',
+    },
+    labels: ['Stipendio', 'PayPal', 'Altro'],
+    responsive: [{
+        breakpoint: 480,
+        options: {
+            chart: {
+                width: 200
+            },
+            legend: {
+                position: 'center'
             }
         }
     }]
@@ -90,10 +109,13 @@ function createLineChart(options) {
     var chart = new ApexCharts(document.querySelector("#lineChart"), options);
     chart.render();
 
-    var chartCat = new ApexCharts(document.querySelector("#categoryChart"), optionsPie);
-    chartCat.render();
+    var chartCatS = new ApexCharts(document.querySelector("#categoryChartS"), optionsPieCategoryS);
+    chartCatS.render();
 
-    var chartBal = new ApexCharts(document.querySelector("#balanceChart"), optionsPie);
+    var chartCatE = new ApexCharts(document.querySelector("#categoryChartE"), optionsPieCategoryE);
+    chartCatE.render();
+
+    var chartBal = new ApexCharts(document.querySelector("#balanceChart"), optionsPieBalance);
     chartBal.render();
 }
 
