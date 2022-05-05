@@ -42,7 +42,7 @@ const entrataSchema = {
 
 const Entrata = mongoose.model("Entrata", entrataSchema)
 
-//GET ------------------------------------
+//GET PAGINE PRINCIPALI E ADD ------------------------------------
 
 app.get("/", async(req, res) => {
 
@@ -224,6 +224,13 @@ app.get("/entrate", (req, res) => {
 
 app.get("/conti", (req, res) => {
     res.render("conti")
+})
+
+//GET DATI GRAFICI ------------------------------------
+
+app.post("/getSpeseForChart", (req, res) => {
+    var x = [1, 2, 3]
+    return res.send(x)
 })
 
 //LISTEN ------------------------------------
