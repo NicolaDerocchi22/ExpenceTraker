@@ -52,8 +52,8 @@ app.get("/", async(req, res) => {
     var tEntrate = 0
     var tHype = 0
     var tPaypal = 0
-
-
+    var optDate = { year: 'numeric', month: 'long', }
+    var oggi = new Date().toLocaleDateString('it-IT', optDate)
 
     entrate = await Entrata.find({})
     spese = await Spesa.find({})
@@ -96,7 +96,7 @@ app.get("/", async(req, res) => {
         }
     });
 
-    res.render("Home", { listaSpese: speseFiltered, listaEntrate: entrateFiltered, totEntrate: tEntrate, totSpese: tSpese, totHype: Number(tHype), totPayPal: Number(tPaypal) })
+    res.render("Home", { listaSpese: speseFiltered, listaEntrate: entrateFiltered, totEntrate: tEntrate, totSpese: tSpese, totHype: Number(tHype), totPayPal: Number(tPaypal), periodo: _.capitalize(oggi) })
 })
 
 //POST PAGINE PRINCIPALI E ADD ------------------------------------
@@ -171,7 +171,10 @@ app.get("/spese", async(req, res) => {
         altro: 0
     }
 
+    var totSpese = 0
+
     spese.forEach(s => {
+        totSpese = totSpese + s.importo
         switch (s.categoria) {
             case "Spesa":
                 result.spesa = result.spesa + s.importo
@@ -215,16 +218,37 @@ app.get("/spese", async(req, res) => {
         }
     });
 
-    var totSpese = 0
-    spese.forEach(s => {
-        totSpese = totSpese + s.importo
-    });
-
     res.render("spese", { spese: spese, tBar: result.bar, tPayPal: result.payPal, tBenzina: result.benzina, tSpesa: result.spesa, tShopping: result.shopping, tRistorante: result.ristorante, tRegali: result.regali, tCasa: result.casa, tPrelievi: result.prelievi, tTelefono: result.telefono, tPalestra: result.palestra, tAltro: result.altro, totSpese: totSpese })
 })
 
-app.get("/entrate", (req, res) => {
-    res.render("entrate")
+app.get("/entrate", async(req, res) => {
+
+    var entrate = await Entrata.find({})
+    var totStipendio = 0
+    var totPayPal = 0
+    var totAltro = 0
+    var tot = 0
+
+    entrate.forEach(e => {
+
+        tot = tot + e.importo
+
+        switch (e.categoria) {
+            case "Stipendio":
+                totStipendio = totStipendio + e.importo
+                break;
+            case "PayPal":
+                totPayPal = totPayPal + e.importo
+                break;
+            case "Altro":
+                totAltro = totAltro + e.importo
+                break;
+            default:
+                break;
+        }
+    });
+
+    res.render("entrate", { entrate: entrate, totEntrate: tot, tStipendio: totStipendio, tPayPal: totPayPal, tAltro: totAltro })
 })
 
 app.get("/conti", (req, res) => {
