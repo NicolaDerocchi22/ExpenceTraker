@@ -95,10 +95,14 @@ app.get("/", async(req, res) => {
 
 app.post("/addEntrata", (req, res) => {
 
+    var dataArray = req.body.dataEntrata.split("/")
+    var dataString = dataArray[2] + "-" + dataArray[1] + "-" + dataArray[0]
+    var dataEntrata = new Date(dataString)
+
     var newEntrata = new Entrata({
         titolo: req.body.titoloEntrata,
         importo: req.body.importoEntrata,
-        data: new Date(),
+        data: dataEntrata,
         descrizione: req.body.noteEntrata,
         categoria: req.body.categoriaEntrata,
         conto: req.body.contoEntrata
@@ -116,10 +120,14 @@ app.post("/addEntrata", (req, res) => {
 
 app.post("/addSpesa", (req, res) => {
 
+    var dataArray = req.body.dataSpesa.split("/")
+    var dataString = dataArray[2] + "-" + dataArray[1] + "-" + dataArray[0]
+    var dataSpesa = new Date(dataString)
+
     var newSpesa = new Spesa({
         titolo: req.body.titoloSpesa,
         importo: req.body.importoSpesa,
-        data: new Date(),
+        data: dataSpesa,
         descrizione: req.body.noteSpesa,
         categoria: req.body.categoriaSpesa,
         conto: req.body.contoSpesa
