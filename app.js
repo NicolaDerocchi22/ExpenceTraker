@@ -252,7 +252,7 @@ app.get("/entrate", async(req, res) => {
 })
 
 app.get("/conti", (req, res) => {
-    res.render("conti")
+    res.render("analisi")
 })
 
 //DATI GRAFICI ------------------------------------

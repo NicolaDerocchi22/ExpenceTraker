@@ -3,7 +3,13 @@
 }
 
 body {
-    background-color: white !important;
+    background-color: #fef9f8 !important;
+    margin: 1rem 3rem;
+    font-family: 'Ubuntu', sans-serif !important;
+}
+
+.bg-color {
+    background-color: #fef9f8 !important;
 }
 
 hr {
@@ -20,10 +26,17 @@ i {
     margin: 3rem;
 }
 
-body {
-    margin: 1rem 3rem;
-}
-
 .spese-margin {
     margin: 3rem;
+}
+
+.nav-font {
+    font-family: 'Ubuntu', sans-serif !important;
+    font-weight: 300;
+    font-size: 1.3rem;
+}
+
+.nav-title-font {
+    font-size: 1.8rem;
+    font-weight: 500;
 }
