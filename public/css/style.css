@@ -4,6 +4,15 @@ body {
     font-family: 'Ubuntu', sans-serif !important;
 }
 
+html {
+    font-family: 'Ubuntu', sans-serif !important;
+    font-weight: 300;
+}
+
+.body-color {
+    background-color: #fef9f8 !important;
+}
+
 .bg-color {
     background-color: #fef9f8 !important;
 }
@@ -45,4 +54,13 @@ i {
 
 .header-color-nav {
     background: #2b6777;
+}
+
+.btn-color {
+    background: #2b6777;
+    color: white !important;
+}
+
+.navbar {
+    padding: 1rem;
 }
