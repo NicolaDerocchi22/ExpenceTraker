@@ -58,6 +58,14 @@ app.get("/", async(req, res) => {
     entrate = await Entrata.find({})
     spese = await Spesa.find({})
 
+    spese = spese.filter((s) => {
+        var today = new Date()
+        var dtStart = new Date(today.getFullYear(), today.getMonth(), 1)
+        var dtEnd = new Date(today.getFullYear(), today.getMonth() + 1, 1)
+
+        return (s.data >= dtStart && s.data <= dtEnd)
+    })
+
     speseFiltered = spese.sort((a, b) => { return b.data - a.data })
     entrateFiltered = entrate.sort((a, b) => { return b.data - a.data })
 
@@ -143,14 +151,6 @@ app.post("/addSpesa", (req, res) => {
     res.redirect("/")
 })
 
-app.get("/getSpeseForChart", (req, res) => {
-    console.log("get spese");
-})
-
-app.get("/getEntrateForChart", (req, res) => {
-    console.log("get entrate");
-})
-
 app.get("/spese", async(req, res) => {
 
     var spese = await Spesa.find({})
@@ -194,9 +194,6 @@ app.get("/spese", async(req, res) => {
             case "Regali":
                 result.regali = result.regali + s.importo
                 break;
-            case "Spesa":
-                result.spesa = result.spesa + s.importo
-                break;
             case "Casa":
                 result.casa = result.casa + s.importo
                 break;
@@ -236,8 +233,43 @@ app.get("/conti", (req, res) => {
 
 //DATI GRAFICI ------------------------------------
 
-app.post("/getSpeseForBalanceChart", (req, res) => {
-    var x = [100, 200]
+app.post("/getSpeseForBalanceChart", async(req, res) => {
+    var x = []
+
+    var spese = await Spesa.find({})
+    var entrate = await Entrata.find({})
+    var tSpese = 0
+    var tEntrate = 0
+
+    spese = spese.filter((s) => {
+        var today = new Date()
+        var dtStart = new Date(today.getFullYear(), today.getMonth(), 1)
+        var dtEnd = new Date(today.getFullYear(), today.getMonth() + 1, 1)
+
+        return (s.data >= dtStart && s.data <= dtEnd)
+    })
+
+    entrate = entrate.filter((e) => {
+        var today = new Date()
+        var dtStart = new Date(today.getFullYear(), today.getMonth(), 1)
+        var dtEnd = new Date(today.getFullYear(), today.getMonth() + 1, 1)
+
+        return (e.data >= dtStart && e.data <= dtEnd)
+    })
+
+    spese.forEach(s => {
+        tSpese = tSpese + s.importo
+    });
+
+    entrate.forEach(e => {
+        tEntrate = tEntrate + e.importo
+    });
+
+    tEntrate = tEntrate - tSpese
+
+    x.push(tSpese)
+    x.push(tEntrate)
+
     return res.send(x)
 })
 
@@ -251,13 +283,21 @@ app.post("/getSpeseForLineChart", async(req, res) => {
 
     var spese = await Spesa.find({})
 
+    spese = spese.filter((s) => {
+        var today = new Date()
+        var dtStart = new Date(today.getFullYear(), today.getMonth(), 1)
+        var dtEnd = new Date(today.getFullYear(), today.getMonth() + 1, 1)
+
+        return (s.data >= dtStart && s.data <= dtEnd)
+    })
+
     for (let i = 1; i <= daysInMonth; i++) {
         x.categories.push(String(i))
         var t = 0
 
         spese.forEach(s => {
             var dataSpesa = new Date(s.data.getTime())
-            if (dataSpesa.getFullYear() === today.getFullYear() && dataSpesa.getMonth() === today.getMonth() && dataSpesa.getDate() === i) {
+            if (dataSpesa.getDate() === i) {
                 t = t + s.importo
             }
         });
@@ -267,14 +307,127 @@ app.post("/getSpeseForLineChart", async(req, res) => {
     return res.send(x)
 })
 
-app.post("/getDataCategoriesS", (req, res) => {
-    var x = [44, 55, 13, 43, 22, 43, 54, 76, 32, 45, 21, 86, 98]
+app.post("/getDataCategoriesS", async(req, res) => {
+    var x = []
+    var cat = {
+        spesa: 0,
+        shopping: 0,
+        ristorante: 0,
+        bar: 0,
+        payPal: 0,
+        benzina: 0,
+        regali: 0,
+        casa: 0,
+        palestra: 0,
+        prelievi: 0,
+        telefono: 0,
+        altro: 0
+    }
+
+    var spese = await Spesa.find({})
+
+    spese = spese.filter((s) => {
+        var today = new Date()
+        var dtStart = new Date(today.getFullYear(), today.getMonth(), 1)
+        var dtEnd = new Date(today.getFullYear(), today.getMonth() + 1, 1)
+
+        return (s.data >= dtStart && s.data <= dtEnd)
+    })
+
+    spese.forEach(s => {
+        switch (s.categoria) {
+            case "Spesa":
+                cat.spesa = cat.spesa + s.importo
+                break;
+            case "Shopping":
+                cat.shopping = cat.shopping + s.importo
+                break;
+            case "Ristorante":
+                cat.ristorante = cat.ristorante + s.importo
+                break;
+            case "Bar":
+                cat.bar = cat.bar + s.importo
+                break;
+            case "PayPal":
+                cat.payPal = cat.payPal + s.importo
+                break;
+            case "Benzina":
+                cat.benzina = cat.benzina + s.importo
+                break;
+            case "Regali":
+                cat.regali = cat.regali + s.importo
+                break;
+            case "Casa":
+                cat.casa = cat.casa + s.importo
+                break;
+            case "Palestra":
+                cat.palestra = cat.palestra + s.importo
+                break;
+            case "Prelievi":
+                cat.prelievi = cat.prelievi + s.importo
+                break;
+            case "Telefono":
+                cat.telefono = cat.telefono + s.importo
+                break;
+            case "Altro":
+                cat.altro = cat.altro + s.importo
+                break;
+            default:
+                break;
+        }
+    });
+
+    x.push(cat.spesa)
+    x.push(cat.shopping)
+    x.push(cat.ristorante)
+    x.push(cat.bar)
+    x.push(cat.payPal)
+    x.push(cat.benzina)
+    x.push(cat.regali)
+    x.push(cat.casa)
+    x.push(cat.palestra)
+    x.push(cat.prelievi)
+    x.push(cat.telefono)
+    x.push(cat.altro)
 
     return res.send(x)
 })
 
-app.post("/getDataCategoriesE", (req, res) => {
-    var x = [1000, 145, 10]
+app.post("/getDataCategoriesE", async(req, res) => {
+    var x = []
+
+    var entrate = await Entrata.find({})
+
+    entrate = entrate.filter((e) => {
+        var today = new Date()
+        var dtStart = new Date(today.getFullYear(), today.getMonth(), 1)
+        var dtEnd = new Date(today.getFullYear(), today.getMonth() + 1, 1)
+
+        return (e.data >= dtStart && e.data <= dtEnd)
+    })
+
+    var stip = 0
+    var ppl = 0
+    var altro = 0
+
+    entrate.forEach(e => {
+        switch (e.categoria) {
+            case "Stipendio":
+                stip = stip + e.importo
+                break;
+            case "PayPal":
+                ppl = ppl + e.importo
+                break
+            case "Altro":
+                altro = altro + e.importo
+                break
+            default:
+                break;
+        }
+    });
+    x.push(stip)
+    x.push(ppl)
+    x.push(altro)
 
     return res.send(x)
 })

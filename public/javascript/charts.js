@@ -18,7 +18,7 @@ function loadChartBalance() {
             width: 380,
             type: 'donut',
         },
-        labels: ['Speso', 'Bilancio'],
+        labels: ['Speso', 'Disponibile'],
         responsive: [{
             breakpoint: 480,
             options: {
@@ -111,7 +111,7 @@ function loadChartCategoriesS() {
             width: 380,
             type: 'donut',
         },
-        labels: ['Spesa', 'Shopping', 'Ristorante', 'Bar', 'PayPal', 'Benzina', 'Regali', 'Spesa', 'Casa', 'Palestra', 'Prelievi', 'Telefono', 'Altro'],
+        labels: ['Spesa', 'Shopping', 'Ristorante', 'Bar', 'PayPal', 'Benzina', 'Regali', 'Casa', 'Palestra', 'Prelievi', 'Telefono', 'Altro'],
         responsive: [{
             breakpoint: 480,
             options: {
