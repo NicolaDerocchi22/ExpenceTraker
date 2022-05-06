@@ -2,7 +2,7 @@
 
     <hr>
     <div class="container-fluid">
-        <div class="card text-center mb-3">
+        <div class="card text-center mb-4 header-color">
             <div class="card-header">
                 <h2>Bilancio</h2>
             </div>
@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-lg-6 col-sm-12">
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header header-color">
                         <div class="row">
                             <div class="col-12">
                                 <h5>Hype</h5>
@@ -30,7 +30,7 @@
             </div>
             <div class="col-lg-6 col-sm-12">
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header header-color">
                         <div class="row">
                             <div class="co-12">
                                 <h5>PayPal</h5>
@@ -56,10 +56,10 @@
     <div class="container-fluid">
         <div class="row align-items-start">
             <div class="d-grid gap-2 col-lg-6 col-sm-12 p-4">
-                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalSpese">Spese<i class="fa-solid fa-money-bill-transfer"></i></button>
+                <button type="button" class="btn btn-light header-color" data-bs-toggle="modal" data-bs-target="#modalSpese">Spese<i class="fa-solid fa-money-bill-transfer"></i></button>
             </div>
             <div class="d-grid gap-2 col-lg-6 col-sm-12 p-4">
-                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEntrate">Entrate<i class="fa-solid fa-circle-dollar-to-slot"></i></button>
+                <button type="button" class="btn btn-light header-color" data-bs-toggle="modal" data-bs-target="#modalEntrate">Entrate<i class="fa-solid fa-circle-dollar-to-slot"></i></button>
             </div>
         </div>
     </div>
@@ -70,12 +70,12 @@
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header header-color">
                         Totale spese:
                         <%= periodo %>
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -116,12 +116,12 @@
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header header-color">
                         Totale entrate:
                         <%= periodo %>
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -166,23 +166,48 @@
     <hr>
 
     <div class="container-fluid">
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-12">
-                <div id="lineChart" class="chartDiv"></div>
+                <div class="card">
+                    <div class="card-header text-center header-color">
+                        <h5>Riepilogo spese</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="lineChart" class="chartDiv"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-12">
-                <h5>Categorie spese</h5>
-                <div id="categoryChartS"></div>
+                <div class="card">
+                    <div class="card-header text-center header-color">
+                        <h5>Categorie spese</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="categoryChartS"></div>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
-                <h5>Bilancio</h5>
-                <div id="balanceChart"></div>
+                <div class="card">
+                    <div class="card-header text-center header-color">
+                        <h5>Bilancio</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="balanceChart"></div>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-4 col-md-12">
-                <h5>Categorie entrate</h5>
-                <div id="categoryChartE"></div>
+                <div class="card">
+                    <div class="card-header text-center header-color">
+                        <h5>Categorie entrate</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="categoryChartE"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
