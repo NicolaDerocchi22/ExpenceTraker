@@ -253,7 +253,15 @@ app.post("/getSpeseForLineChart", async(req, res) => {
 
     for (let i = 1; i <= daysInMonth; i++) {
         x.categories.push(String(i))
-        x.data.push(37)
+        var t = 0
+
+        spese.forEach(s => {
+            var dataSpesa = new Date(s.data.getTime())
+            if (dataSpesa.getFullYear() === today.getFullYear() && dataSpesa.getMonth() === today.getMonth() && dataSpesa.getDate() === i) {
+                t = t + s.importo
+            }
+        });
+        x.data.push(t)
     }
 
     return res.send(x)
