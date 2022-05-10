@@ -42,6 +42,23 @@ const entrataSchema = {
 
 const Entrata = mongoose.model("Entrata", entrataSchema)
 
+const budgetSchema = {
+    spesa: Number,
+    shopping: Number,
+    ristorante: Number,
+    bar: Number,
+    payPal: Number,
+    benzina: Number,
+    regali: Number,
+    casa: Number,
+    palestra: Number,
+    prelievi: Number,
+    telefono: Number,
+    altro: Number
+}
+
+const Budget = mongoose.model("Budget", budgetSchema)
+
 //GET PAGINE PRINCIPALI E ADD ------------------------------------
 
 app.get("/", async(req, res) => {
@@ -151,6 +168,34 @@ app.post("/addSpesa", (req, res) => {
     res.redirect("/")
 })
 
+app.post("/editBudget", async(req, res) => {
+
+    await Budget.deleteMany()
+
+    var budget = new Budget({
+        spesa: req.body.CatSpesa,
+        shopping: req.body.CatShopping,
+        ristorante: req.body.CatRistorante,
+        bar: req.body.CatBar,
+        payPal: req.body.CatPayPal,
+        benzina: req.body.CatBenzina,
+        regali: req.body.CatRegali,
+        casa: req.body.CatCasa,
+        palestra: req.body.CatPalestra,
+        prelievi: req.body.CatPrelievi,
+        telefono: req.body.CatTelefono,
+        altro: req.body.CatAltro,
+    })
+
+    try {
+        budget.save()
+        console.log("Budget modificato");
+    } catch (error) {
+        console.log(error);
+    }
+    res.redirect("analisi")
+})
+
 app.get("/spese", async(req, res) => {
 
     var spese = await Spesa.find({})
@@ -251,9 +296,126 @@ app.get("/entrate", async(req, res) => {
     res.render("entrate", { entrate: entrate, totEntrate: tot, tStipendio: totStipendio, tPayPal: totPayPal, tAltro: totAltro })
 })
 
-app.get("/conti", (req, res) => {
-    res.render("analisi")
-})
+app.get("/analisi", async(req, res) => {
+
+    var budgetSummary = {
+        rSpesa: 0,
+        rShopping: 0,
+        rRistorante: 0,
+        rBar: 0,
+        rPayPal: 0,
+        rBenzina: 0,
+        rRegali: 0,
+        rCasa: 0,
+        rPalestra: 0,
+        rPrelievi: 0,
+        rTelefono: 0,
+        rAltro: 0,
+
+        bSpesa: 0,
+        bShopping: 0,
+        bRistorante: 0,
+        bBar: 0,
+        bPayPal: 0,
+        bBenzina: 0,
+        bRegali: 0,
+        bCasa: 0,
+        bPalestra: 0,
+        bPrelievi: 0,
+        bTelefono: 0,
+        bAltro: 0,
+
+        diffSpesa: 0,
+        diffShopping: 0,
+        diffRistorante: 0,
+        diffBar: 0,
+        diffPayPal: 0,
+        diffBenzina: 0,
+        diffRegali: 0,
+        diffCasa: 0,
+        diffPalestra: 0,
+        diffPrelievi: 0,
+        diffTelefono: 0,
+        diffAltro: 0,
+    }
+
+    var budget = await Budget.findOne({})
+
+    budgetSummary.bSpesa = budget.spesa
+    budgetSummary.bShopping = budget.shopping
+    budgetSummary.bRistorante = budget.ristorante
+    budgetSummary.bBar = budget.bar
+    budgetSummary.bPayPal = budget.payPal
+    budgetSummary.bBenzina = budget.benzina
+    budgetSummary.bRegali = budget.regali
+    budgetSummary.bCasa = budget.casa
+    budgetSummary.bPalestra = budget.palestra
+    budgetSummary.bPrelievi = budget.prelievi
+    budgetSummary.bTelefono = budget.telefono
+    budgetSummary.bAltro = budget.altro
+
+    var spese = await Spesa.find({})
+    var totSpese = 0
+
+    spese.forEach(s => {
+        totSpese = totSpese + s.importo
+        switch (s.categoria) {
+            case "Spesa":
+                budgetSummary.rSpesa = budgetSummary.rSpesa + s.importo
+                break;
+            case "Shopping":
+                budgetSummary.rShopping = budgetSummary.rShopping + s.importo
+                break;
+            case "Ristorante":
+                budgetSummary.rRistorante = budgetSummary.rRistorante + s.importo
+                break;
+            case "Bar":
+                budgetSummary.rBar = budgetSummary.rBar + s.importo
+                break;
+            case "PayPal":
+                budgetSummary.rPayPal = budgetSummary.rPayPal + s.importo
+                break;
+            case "Benzina":
+                budgetSummary.rBenzina = budgetSummary.rBenzina + s.importo
+                break;
+            case "Regali":
+                budgetSummary.rRegali = budgetSummary.rRegali + s.importo
+                break;
+            case "Casa":
+                budgetSummary.rCasa = budgetSummary.rCasa + s.importo
+                break;
+            case "Palestra":
+                budgetSummary.rPalestra = budgetSummary.rPalestra + s.importo
+                break;
+            case "Prelievi":
+                budgetSummary.rPrelievi = budgetSummary.rPrelievi + s.importo
+                break;
+            case "Telefono":
+                budgetSummary.rTelefono = budgetSummary.rTelefono + s.importo
+                break;
+            case "Altro":
+                budgetSummary.rAltro = budgetSummary.rAltro + s.importo
+                break;
+            default:
+                break;
+        }
+    });
+
+    budgetSummary.diffSpesa = budgetSummary.bSpesa - budgetSummary.rSpesa
+    budgetSummary.diffShopping = budgetSummary.bShopping - budgetSummary.rShopping
+    budgetSummary.diffRistorante = budgetSummary.bRistorante - budgetSummary.rRistorante
+    budgetSummary.diffBar = budgetSummary.bBar - budgetSummary.rBar
+    budgetSummary.diffPayPal = budgetSummary.bPayPal - budgetSummary.rPayPal
+    budgetSummary.diffBenzina = budgetSummary.bBenzina - budgetSummary.rBenzina
+    budgetSummary.diffRegali = budgetSummary.bRegali - budgetSummary.rRegali
+    budgetSummary.diffCasa = budgetSummary.bCasa - budgetSummary.rCasa
+    budgetSummary.diffPalestra = budgetSummary.bPalestra - budgetSummary.rPalestra
+    budgetSummary.diffPrelievi = budgetSummary.bPrelievi - budgetSummary.rPrelievi
+    budgetSummary.diffTelefono = budgetSummary.bTelefono - budgetSummary.rTelefono
+    budgetSummary.diffAltro = budgetSummary.bAltro - budgetSummary.rAltro
+
+    res.render("analisi", { budgetDetails: budgetSummary })
+});
 
 //DATI GRAFICI ------------------------------------
 

@@ -13,17 +13,168 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>Spese</h3>
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-light mt-1 ms-3 header-color-nav nav-font" data-bs-toggle="modal" data-bs-target="#modalBudget">Modifica budget</button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-6 col-md-12">
-                                <h4>Totale speso: 2345</h4>
-                                <h4>Max: 1000</h4>
-                                <h4>Numero spese: 342</h4>
-                            </div>
-                            <div class="col-lg-6 col-md-12">
-
-                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Categoria</th>
+                                        <th scope="col">Stimato</th>
+                                        <th scope="col">Reale</th>
+                                        <th scope="col">Differenza</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Spesa</th>
+                                        <td>€
+                                            <%= budgetDetails.bSpesa %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rSpesa %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffSpesa %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Shopping</th>
+                                        <td>€
+                                            <%= budgetDetails.bShopping %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rShopping %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffShopping %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Ristorante</th>
+                                        <td>€
+                                            <%= budgetDetails.bRistorante %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rRistorante %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffRistorante %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Bar</th>
+                                        <td>€
+                                            <%= budgetDetails.bBar %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rBar %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffBar %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">PayPal</th>
+                                        <td>€
+                                            <%= budgetDetails.bPayPal %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rPayPal %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffPayPal %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Benzina</th>
+                                        <td>€
+                                            <%= budgetDetails.bBenzina %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rBenzina %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffBenzina %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Regali</th>
+                                        <td>€
+                                            <%= budgetDetails.bRegali %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rRegali %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffRegali %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Casa</th>
+                                        <td>€
+                                            <%= budgetDetails.bCasa %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rCasa %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffCasa %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Palestra</th>
+                                        <td>€
+                                            <%= budgetDetails.bPalestra %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rPalestra %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffPalestra %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Prelievi</th>
+                                        <td>€
+                                            <%= budgetDetails.bPrelievi %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rPrelievi %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffPrelievi %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Telefono</th>
+                                        <td>€
+                                            <%= budgetDetails.bTelefono %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rTelefono %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffTelefono %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Altro</th>
+                                        <td>€
+                                            <%= budgetDetails.bAltro %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.rAltro %>
+                                        </td>
+                                        <td>€
+                                            <%= budgetDetails.diffAltro %>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -45,5 +196,110 @@
 
     <%- include("footer") -%>
         </body>
+
+        <div class="modal fade" id="modalBudget" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content body-color">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modifica budget</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/editBudget" method="post">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card mt-3 mb-3">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Spesa</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatSpesa">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Shopping</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatShopping">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Ristorante</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatRistorante">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Bar</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatBar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-3 mb-3">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">PayPal</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatPayPal">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Benzina</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatBenzina">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Regali</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatRegali">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Casa</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatCasa">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-3 mb-3">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Palestra</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatPalestra">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Prelievi</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatPrelievi">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Telefono</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatTelefono">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="m-4">
+                                                <label class="form-label">Altro</label>
+                                                <input class="form-control" type="text" placeholder="€###,##" name="CatAltro">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                            <button type="submit" class="btn btn-primary btn-color">Salva</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         </html>

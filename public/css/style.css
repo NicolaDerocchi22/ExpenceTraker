@@ -64,3 +64,11 @@ i {
 .navbar {
     padding: 1rem;
 }
+
+thead {
+    font-size: 1.3rem;
+}
+
+td {
+    font-weight: 300;
+}
