@@ -59,7 +59,7 @@ const budgetSchema = {
 
 const Budget = mongoose.model("Budget", budgetSchema)
 
-//GET PAGINE PRINCIPALI E ADD ------------------------------------
+//GET PAGINa PRINCIPALE ------------------------------------
 
 app.get("/", async(req, res) => {
 
@@ -616,6 +616,175 @@ app.post("/getDataCategoriesE", async(req, res) => {
     x.push(altro)
 
     return res.send(x)
+})
+
+app.post("/getDataBudgetChart", async(req, res) => {
+    var option = {
+        x: '', //categoria
+        y: 0, //valore reale
+        goals: [{
+            name: 'Previsto',
+            value: 14, //valore budget
+            strokeWidth: 5,
+            strokeHeight: 10,
+            strokeColor: '#775DD0'
+        }]
+    }
+
+    var budgetSummary = {
+        rSpesa: 0,
+        rShopping: 0,
+        rRistorante: 0,
+        rBar: 0,
+        rPayPal: 0,
+        rBenzina: 0,
+        rRegali: 0,
+        rCasa: 0,
+        rPalestra: 0,
+        rPrelievi: 0,
+        rTelefono: 0,
+        rAltro: 0,
+
+        bSpesa: 0,
+        bShopping: 0,
+        bRistorante: 0,
+        bBar: 0,
+        bPayPal: 0,
+        bBenzina: 0,
+        bRegali: 0,
+        bCasa: 0,
+        bPalestra: 0,
+        bPrelievi: 0,
+        bTelefono: 0,
+        bAltro: 0,
+    }
+
+    var budget = await Budget.findOne({})
+
+    budgetSummary.bSpesa = budget.spesa
+    budgetSummary.bShopping = budget.shopping
+    budgetSummary.bRistorante = budget.ristorante
+    budgetSummary.bBar = budget.bar
+    budgetSummary.bPayPal = budget.payPal
+    budgetSummary.bBenzina = budget.benzina
+    budgetSummary.bRegali = budget.regali
+    budgetSummary.bCasa = budget.casa
+    budgetSummary.bPalestra = budget.palestra
+    budgetSummary.bPrelievi = budget.prelievi
+    budgetSummary.bTelefono = budget.telefono
+    budgetSummary.bAltro = budget.altro
+
+    var spese = await Spesa.find({})
+    var totSpese = 0
+
+    spese.forEach(s => {
+        totSpese = totSpese + s.importo
+        switch (s.categoria) {
+            case "Spesa":
+                budgetSummary.rSpesa = budgetSummary.rSpesa + s.importo
+                break;
+            case "Shopping":
+                budgetSummary.rShopping = budgetSummary.rShopping + s.importo
+                break;
+            case "Ristorante":
+                budgetSummary.rRistorante = budgetSummary.rRistorante + s.importo
+                break;
+            case "Bar":
+                budgetSummary.rBar = budgetSummary.rBar + s.importo
+                break;
+            case "PayPal":
+                budgetSummary.rPayPal = budgetSummary.rPayPal + s.importo
+                break;
+            case "Benzina":
+                budgetSummary.rBenzina = budgetSummary.rBenzina + s.importo
+                break;
+            case "Regali":
+                budgetSummary.rRegali = budgetSummary.rRegali + s.importo
+                break;
+            case "Casa":
+                budgetSummary.rCasa = budgetSummary.rCasa + s.importo
+                break;
+            case "Palestra":
+                budgetSummary.rPalestra = budgetSummary.rPalestra + s.importo
+                break;
+            case "Prelievi":
+                budgetSummary.rPrelievi = budgetSummary.rPrelievi + s.importo
+                break;
+            case "Telefono":
+                budgetSummary.rTelefono = budgetSummary.rTelefono + s.importo
+                break;
+            case "Altro":
+                budgetSummary.rAltro = budgetSummary.rAltro + s.importo
+                break;
+            default:
+                break;
+        }
+    });
+
+    var result = []
+
+    option.x = "Spesa"
+    option.y = budgetSummary.rSpesa
+    option.goals.value = budgetSummary.bSpesa
+    result.push(option)
+
+    option.x = "Shopping"
+    option.y = budgetSummary.rShopping
+    option.goals.value = budgetSummary.bShopping
+    result.push(option)
+
+    option.x = "Ristorante"
+    option.y = budgetSummary.rRistorante
+    option.goals.value = budgetSummary.bRistorante
+    result.push(option)
+
+    option.x = "Bar"
+    option.y = budgetSummary.rBar
+    option.goals.value = budgetSummary.bBar
+    result.push(option)
+
+    option.x = "PayPal"
+    option.y = budgetSummary.rPayPal
+    option.goals.value = budgetSummary.bPayPal
+    result.push(option)
+
+    option.x = "Benzina"
+    option.y = budgetSummary.rBenzina
+    option.goals.value = budgetSummary.bBenzina
+    result.push(option)
+
+    option.x = "Regali"
+    option.y = budgetSummary.rRegali
+    option.goals.value = budgetSummary.bRegali
+    result.push(option)
+
+    option.x = "Casa"
+    option.y = budgetSummary.rSpesa
+    option.goals.value = budgetSummary.bSpesa
+    result.push(option)
+
+    option.x = "Palestra"
+    option.y = budgetSummary.rPalestra
+    option.goals.value = budgetSummary.bPalestra
+    result.push(option)
+
+    option.x = "Prelievi"
+    option.y = budgetSummary.rPrelievi
+    option.goals.value = budgetSummary.bPrelievi
+    result.push(option)
+
+    option.x = "Telefono"
+    option.y = budgetSummary.rTelefono
+    option.goals.value = budgetSummary.bTelefono
+    result.push(option)
+
+    option.x = "Altro"
+    option.y = budgetSummary.rAltro
+    option.goals.value = budgetSummary.bAltro
+    result.push(option)
+
+    console.log(result);
+
 })
 
 // FUNZIONI VAIRE ------------------------------------

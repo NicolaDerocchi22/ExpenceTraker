@@ -8,11 +8,23 @@
     </div>
 
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Analisi budget</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="budgetChart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row m-3">
             <div class="col-lg-12 text-center">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Spese</h3>
+                        <h3>Differenza budget</h3>
                         <div class="d-grid gap-2">
                             <button type="button" class="btn btn-light mt-1 ms-3 header-color-nav nav-font" data-bs-toggle="modal" data-bs-target="#modalBudget">Modifica budget</button>
                         </div>
@@ -195,6 +207,8 @@
     </div>
 
     <%- include("footer") -%>
+
+        <script src="/javascript/chartsAnalisi.js"></script>
         </body>
 
         <div class="modal fade" id="modalBudget" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -1,8 +1,3 @@
-function createLineChart(options) {
-    var chartCatE = new ApexCharts(document.querySelector("#categoryChartE"), optionsPieCategoryE);
-    chartCatE.render();
-}
-
 function loadCharts() {
     loadLineChart()
     loadChartBalance()
@@ -220,6 +215,5 @@ function fetchDataCategoriesChartE() {
 }
 
 window.onload = () => {
-    //createLineChart(options)
     loadCharts()
 }
