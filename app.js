@@ -725,63 +725,63 @@ app.post("/getDataBudgetChart", async(req, res) => {
 
     option.x = "Spesa"
     option.y = budgetSummary.rSpesa
-    option.goals.value = budgetSummary.bSpesa
-    result.push(option)
+    option.goals[0].value = budgetSummary.bSpesa
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Shopping"
     option.y = budgetSummary.rShopping
-    option.goals.value = budgetSummary.bShopping
-    result.push(option)
+    option.goals[0].value = budgetSummary.bShopping
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Ristorante"
     option.y = budgetSummary.rRistorante
-    option.goals.value = budgetSummary.bRistorante
-    result.push(option)
+    option.goals[0].value = budgetSummary.bRistorante
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Bar"
     option.y = budgetSummary.rBar
-    option.goals.value = budgetSummary.bBar
-    result.push(option)
+    option.goals[0].value = budgetSummary.bBar
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "PayPal"
     option.y = budgetSummary.rPayPal
-    option.goals.value = budgetSummary.bPayPal
-    result.push(option)
+    option.goals[0].value = budgetSummary.bPayPal
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Benzina"
     option.y = budgetSummary.rBenzina
-    option.goals.value = budgetSummary.bBenzina
-    result.push(option)
+    option.goals[0].value = budgetSummary.bBenzina
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Regali"
     option.y = budgetSummary.rRegali
-    option.goals.value = budgetSummary.bRegali
-    result.push(option)
+    option.goals[0].value = budgetSummary.bRegali
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Casa"
     option.y = budgetSummary.rSpesa
-    option.goals.value = budgetSummary.bSpesa
-    result.push(option)
+    option.goals[0].value = budgetSummary.bSpesa
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Palestra"
     option.y = budgetSummary.rPalestra
-    option.goals.value = budgetSummary.bPalestra
-    result.push(option)
+    option.goals[0].value = budgetSummary.bPalestra
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Prelievi"
     option.y = budgetSummary.rPrelievi
-    option.goals.value = budgetSummary.bPrelievi
-    result.push(option)
+    option.goals[0].value = budgetSummary.bPrelievi
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Telefono"
     option.y = budgetSummary.rTelefono
-    option.goals.value = budgetSummary.bTelefono
-    result.push(option)
+    option.goals[0].value = budgetSummary.bTelefono
+    result.push(JSON.parse(JSON.stringify(option)))
 
     option.x = "Altro"
     option.y = budgetSummary.rAltro
-    option.goals.value = budgetSummary.bAltro
-    result.push(option)
+    option.goals[0].value = budgetSummary.bAltro
+    result.push(JSON.parse(JSON.stringify(option)))
 
     return res.send(result)
 
