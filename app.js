@@ -783,7 +783,7 @@ app.post("/getDataBudgetChart", async(req, res) => {
     option.goals.value = budgetSummary.bAltro
     result.push(option)
 
-    console.log(result);
+    return res.send(result)
 
 })
 

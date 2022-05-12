@@ -10,7 +10,7 @@ function fetchDataBudgetChart() {
         .then(response => response.json())
 }
 
-function loadChartCategoriesE() {
+function loadChartBudget() {
 
     var optionsBudget = {
         series: [{
@@ -54,15 +54,15 @@ function loadChartCategoriesE() {
             if (res === null) {
                 console.log("Bad");
             } else {
-                optionsPieCategoryE.series = res
-                var chart = new ApexCharts(document.querySelector("#categoryChartE"), optionsPieCategoryE);
-                chart.render();
+                optionsBudget.series[0].data = res
+                var budgetChart = new ApexCharts(document.querySelector("#budgetChart"), optionsBudget);
+                budgetChart.render();
             }
         })
 }
 
 function loadCharts(params) {
-    loadChartCategoriesE()
+    loadChartBudget()
 }
 
 window.onload = () => {
