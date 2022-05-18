@@ -45,6 +45,7 @@
                             <th scope="col">Importo</th>
                             <th scope="col">Conto</th>
                             <th scope="col">Note</th>
+                            <th scope="col">Operazioni</th>
                         </tr>
                         <% entrate.forEach(e => { %>
                             <tr>
@@ -65,6 +66,13 @@
                                 </td>
                                 <td>
                                     <%= e.descrizione %>
+                                </td>
+                                <td class="text-table">
+                                    <form action="/deleteEntrata" method="post">
+                                        <button type="submit" name="btndeleteEntrate" value="<%= e._id %>"
+                                            class="btn btn-sm btn-outline-primary"><i
+                                                class="fa-solid fa-trash-arrow-up fa-sm"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                             <% }); %>

@@ -76,26 +76,34 @@
                             <th scope="col">Importo</th>
                             <th scope="col">Conto</th>
                             <th scope="col">Note</th>
+                            <th scope="col">Operazioni</th>
                         </tr>
-                        <% spese.forEach(s => { %>
+                        <% spese.forEach(s=> { %>
                             <tr>
-                                <th scope="row">
+                                <th scope="row" class="text-table">
                                     <%= s.titolo %>
                                 </th>
-                                <td>
+                                <td class="text-table">
                                     <%= s.data.toLocaleDateString("it-IT") %>
                                 </td>
-                                <td>
+                                <td class="text-table">
                                     <%= s.categoria %>
                                 </td>
-                                <td>
+                                <td class="text-table">
                                     <%= s.importo %>
                                 </td>
-                                <td>
+                                <td class="text-table">
                                     <%= s.conto %>
                                 </td>
-                                <td>
+                                <td class="text-table">
                                     <%= s.descrizione %>
+                                </td>
+                                <td class="text-table">
+                                    <form action="/deleteSpesa" method="post">
+                                        <button type="submit" name="btndeleteSpese" value="<%= s._id %>"
+                                            class="btn btn-sm btn-outline-primary"><i
+                                                class="fa-solid fa-trash-arrow-up fa-sm"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                             <% }); %>

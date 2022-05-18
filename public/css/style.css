@@ -72,3 +72,7 @@ thead {
 td {
     font-weight: 300;
 }
+
+.text-table{
+    font-size: 1rem;
+}
