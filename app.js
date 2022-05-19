@@ -874,18 +874,17 @@ app.post("/getDataBilancioChart", async (req, res) => {
 
     spese.forEach((s) => {
       var dataSpesa = new Date(s.data.getTime());
-      if (dataSpesa.getDate() === i) {
+      if (dataSpesa.getDate() <= i) {
         ts = ts + s.importo;
       }
     });
 
     entrate.forEach((e) => {
       var dateEntrata = new Date(e.data.getTime());
-      if (dateEntrata.getDate === i) {
+      if (dateEntrata.getDate() <= i) {
         te = te + e.importo;
       }
     });
-
     x.data.push(te - ts);
   }
 
