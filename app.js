@@ -848,6 +848,50 @@ app.post("/getDataBudgetChart", async (req, res) => {
   return res.send(result);
 });
 
+app.post("/getDataBilancioChart", async (req, res) => {
+  var today = new Date();
+  var daysInMonth = getDayInMonth(today.getMonth() + 1, today.getFullYear());
+  var x = {
+    data: [],
+    categories: [],
+  };
+
+  var spese = await Spesa.find({});
+  var entrate = await Entrata.find({});
+
+  spese = spese.filter((s) => {
+    var today = new Date();
+    var dtStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    var dtEnd = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+
+    return s.data >= dtStart && s.data <= dtEnd;
+  });
+
+  for (let i = 1; i <= daysInMonth; i++) {
+    x.categories.push(String(i));
+    var ts = 0;
+    var te = 0;
+
+    spese.forEach((s) => {
+      var dataSpesa = new Date(s.data.getTime());
+      if (dataSpesa.getDate() === i) {
+        ts = ts + s.importo;
+      }
+    });
+
+    entrate.forEach((e) => {
+      var dateEntrata = new Date(e.data.getTime());
+      if (dateEntrata.getDate === i) {
+        te = te + e.importo;
+      }
+    });
+
+    x.data.push(te - ts);
+  }
+
+  return res.send(x);
+});
+
 // FUNZIONI VAIRE ------------------------------------
 
 function getDayInMonth(m, a) {
